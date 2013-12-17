@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2E9ED907-9BC0-4DA6-BFB7-233CCA4AB401}</ProjectGuid>
+    <ProjectGuid>{A41EA782-05DA-4185-880C-B22E7D683589}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CareerCup.Test</RootNamespace>
@@ -60,9 +60,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ContainsTestBase.cs" />
+    <Compile Include="WesContainsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CareerCup\CareerCup.csproj">
+      <Project>{0144D8BF-84B8-4568-B2CD-38417C89B916}</Project>
+      <Name>CareerCup</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
