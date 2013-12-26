@@ -25,29 +25,20 @@ namespace CareerCup
                 positions[needle[i]].Add(i);
             }
 
-            for (int i = 0; i < haystack.Length; i += needle.Length)
+            for (int i = needle.Length - 1; i < haystack.Length; i += needle.Length)
             {
-                
                 char currentChar = haystack[i];
-
-                if (currentChar == firstChar && haystack.Substring(0, needle.Length) == needle)
-                {
-                    return true;
-                }
-                else
-                {
-                    i = needle.Length-1;
-                }
-
                 int[] places = PositionOfLetter(currentChar);
                 if (places == null)
                 {
-                    // i += needle.Length;
                     continue;
                 }
 
                 foreach (var item in places)
                 {
+                    if (((i - item) < 0) || (i - item) + needle.Length > (haystack.Length))
+                        continue;
+
                     if (haystack[i - item] == firstChar)
                     {
                         string candidate = haystack.Substring(i - item, needle.Length);
@@ -75,5 +66,5 @@ namespace CareerCup
         }
 
     }
-    
+
 }
