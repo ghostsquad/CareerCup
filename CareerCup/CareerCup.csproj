@@ -42,9 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdrianStringContains.cs" />
-    <Compile Include="IContains.cs" />
-    <Compile Include="StringContains.cs" />
+    <Compile Include="StringManipulation\Adrian\StringContains.cs" />
+    <Compile Include="Trees\BinaryTreeBuilderBase.cs" />
+    <Compile Include="StringManipulation\ContainsBase.cs" />
+    <Compile Include="StringManipulation\Wes\WesStringContains.cs" />
+    <Compile Include="Trees\TreeComponents\BinaryTreeNode.cs" />
+    <Compile Include="Trees\Adrian\BinaryTreeBuilder.cs" />
+    <Compile Include="Trees\Wes\BinaryTreeBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

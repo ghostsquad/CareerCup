@@ -1,7 +1,18 @@
-﻿namespace CareerCup.Test
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ContainsTestBase.cs" company="https://github.com/ghostsquad">
+//   2013 Weston McNamee, Adrian Padilla
+// </copyright>
+// <summary>
+//   The contains test base.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace CareerCup.Test.StringManipulationTests
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Text;
+
+    using CareerCup.StringManipulation;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,10 +22,14 @@
     ///     The contains test base.
     /// </summary>
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public abstract class ContainsTestBase
     {
         #region Constants
 
+        /// <summary>
+        ///     The strong needle.
+        /// </summary>
         private const string StrongNeedle = "abcdef";
 
         #endregion
@@ -24,12 +39,15 @@
         /// <summary>
         ///     Gets or sets the contains algorithm.
         /// </summary>
-        public IContains ContainsAlgorithm { get; set; }
+        public ContainsBase ContainsBaseAlgorithm { get; set; }
 
         #endregion
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///     The given haystack is partial needle expect return false.
+        /// </summary>
         [TestMethod]
         public void GivenHaystackIsPartialNeedleExpectReturnFalse()
         {
@@ -37,7 +55,7 @@
             string haystack = StrongNeedle.Substring(0, StrongNeedle.Length - 1);
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, StrongNeedle);
 
             // assert
             Assert.IsFalse(result);
@@ -54,7 +72,7 @@
             var haystack = fixture.Create<string>();
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, StrongNeedle);
 
             // assert
             Assert.IsFalse(result);
@@ -71,7 +89,7 @@
             string haystack = StrongNeedle + "|" + fixture.Create<string>();
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, StrongNeedle);
 
             // assert
             Assert.IsTrue(result);
@@ -88,7 +106,7 @@
             string haystack = fixture.Create<string>() + "|" + StrongNeedle;
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, StrongNeedle);
 
             // assert
             Assert.IsTrue(result);
@@ -106,7 +124,7 @@
             string haystack = StrongNeedle.Substring(0, StrongNeedle.Length - 1) + "|" + haystackEnd;
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, StrongNeedle);
 
             // assert
             Assert.IsFalse(result);
@@ -123,22 +141,28 @@
             string haystack = fixture.Create<string>() + "|" + StrongNeedle.Substring(0, StrongNeedle.Length - 1);
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, StrongNeedle);
 
             // assert
             Assert.IsFalse(result);
         }
 
+        /// <summary>
+        ///     The given needle only expect return true.
+        /// </summary>
         [TestMethod]
         public void GivenNeedleOnlyExpectReturnTrue()
         {
             // act
-            bool result = this.ContainsAlgorithm.Contains(StrongNeedle, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(StrongNeedle, StrongNeedle);
 
             // assert
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        ///     The given needle with duplicate characters expect return true.
+        /// </summary>
         [TestMethod]
         public void GivenNeedleWithDuplicateCharactersExpectReturnTrue()
         {
@@ -150,15 +174,19 @@
             {
                 needleSb.Append(c);
             }
+
             string haystack = haystackPartial + "|" + needleSb + "|" + haystackPartial;
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, needleSb.ToString());
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, needleSb.ToString());
 
             // assert
             Assert.IsTrue(result);
         }
 
+        /// <summary>
+        ///     The given single character needle and haystack expect return true.
+        /// </summary>
         [TestMethod]
         public void GivenSingleCharacterNeedleAndHaystackExpectReturnTrue()
         {
@@ -167,7 +195,7 @@
             string both = fixture.Create<char>().ToString(CultureInfo.InvariantCulture);
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(both, both);
+            bool result = this.ContainsBaseAlgorithm.Contains(both, both);
 
             // assert
             Assert.IsTrue(result);
@@ -192,8 +220,8 @@
             sb.Append(haystackChar).Append(needleChar).Append(haystackChar);
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(
-                sb.ToString(),
+            bool result = this.ContainsBaseAlgorithm.Contains(
+                sb.ToString(), 
                 needleChar.ToString(CultureInfo.InvariantCulture));
 
             // assert
@@ -210,7 +238,7 @@
             string haystack = StrongNeedle.Substring(0, StrongNeedle.Length - 1) + StrongNeedle;
 
             // act
-            bool result = this.ContainsAlgorithm.Contains(haystack, StrongNeedle);
+            bool result = this.ContainsBaseAlgorithm.Contains(haystack, StrongNeedle);
 
             // assert
             Assert.IsTrue(result);

@@ -59,10 +59,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AdrianContainsTests.cs" />
+    <Compile Include="StringManipulationTests\AdrianContainsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ContainsTestBase.cs" />
-    <Compile Include="WesContainsTests.cs" />
+    <Compile Include="StringManipulationTests\ContainsTestBase.cs" />
+    <Compile Include="StringManipulationTests\WesContainsTests.cs" />
+    <Compile Include="TreeTests\BinaryTreeBuilderTestBase.cs" />
+    <Compile Include="TreeTests\AdrianBinaryTreeBuilderTests.cs" />
+    <Compile Include="TreeTests\WesBinaryTreeBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -73,6 +76,10 @@
       <Name>CareerCup</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TreeTests\" />
+  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
