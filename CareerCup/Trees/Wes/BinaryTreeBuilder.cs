@@ -119,46 +119,57 @@ namespace CareerCup.Trees.Wes
             this.PreOrderTraversal = preOrderTraversal;
             this.InOrderTraversal = inOrderTraversal;
 
-            var root = new BinaryTreeNode() { Data = this.PreOrderTraversal[0] };
+            var absoluteRoot = new BinaryTreeNode() { Data = this.PreOrderTraversal[0] };
+            var absoluteRootInOrderIndex = this.FindNextIndex(0, inOrderTraversal.Count - 1, absoluteRoot.Data);
 
-            this.Construct(0, inOrderTraversal.Count - 1, root, null);
+            // left
+            this.Construct(0, absoluteRootInOrderIndex - 1, absoluteRoot, Direction.Left);
+
+            // right
+            this.Construct(absoluteRootInOrderIndex + 1, inOrderTraversal.Count - 1, absoluteRoot, Direction.Right);
             
-            return root;
+            return absoluteRoot;
         }
 
         #endregion
 
-        private void Construct(int low, int high, BinaryTreeNode previousRoot, bool? isLeft)
+        private void Construct(int low, int high, BinaryTreeNode previousRoot, Direction direction)
         {
+            this.PreOrderIndex++;
+
             if (this.PreOrderIndex >= this.PreOrderTraversal.Count)
             {
                 return;
             }
-
-            var newRoot = new BinaryTreeNode() { Data = this.PreOrderTraversal[this.PreOrderIndex] };
-            var chunkIndex = this.FindNextIndex(low, high, newRoot.Data);
+            
+            var newRoot = new BinaryTreeNode() { Data = this.PreOrderTraversal[this.PreOrderIndex] };            
+            var newRootInOrderIndex = this.FindNextIndex(low, high, newRoot.Data);
 
             // left
-            if (isLeft == true)
+            if (direction == Direction.Left)
             {
                 previousRoot.Left = newRoot;
             }
-            else if(isLeft == false)
+            else
             {
                 previousRoot.Right = newRoot;
             }
-
-            if (chunkIndex >= 0 && chunkIndex - 1 >= 0)
+            
+            if (newRootInOrderIndex - 1 >= 0 && newRootInOrderIndex > low)
             {
-                this.PreOrderIndex++;
-                this.Construct(low, chunkIndex - 1, previousRoot.Left ?? previousRoot, true);
+                this.Construct(low, newRootInOrderIndex - 1, newRoot, Direction.Left);
             }
 
-            if (chunkIndex >= 0 && chunkIndex + 1 < this.InOrderTraversal.Count - 1)
+            if (newRootInOrderIndex >= 0 && newRootInOrderIndex + 1 < this.InOrderTraversal.Count - 1 && newRootInOrderIndex < high)
             {
-                this.PreOrderIndex++;
-                this.Construct(chunkIndex + 1, high, previousRoot.Right ?? previousRoot, false);
+                this.Construct(newRootInOrderIndex + 1, high, newRoot, Direction.Right);
             }
+        }
+
+        private enum Direction
+        {
+            Left,
+            Right
         }
 
         private int FindNextIndex(int low, int high, int value)

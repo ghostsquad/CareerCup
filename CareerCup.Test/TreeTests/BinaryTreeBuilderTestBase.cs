@@ -39,13 +39,13 @@ namespace CareerCup.Test.TreeTests
 
         // Resulting Binary Tree:
 
-        // ---- 7 ----
-        // /                 \
-        // 10                    2
+        //         ---- 7 ----
+        //     /                 \
+        //  10                    2
         // /   \                /
-        // 4     3              8
-        // \          /
-        // 1       11
+        //4     3              8
+        //         \          /
+        //           1       11
         #region Public Methods and Operators
 
         /// <summary>
